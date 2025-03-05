@@ -21,13 +21,24 @@ writeDE s a e i =
       writeFile ("~/.local/share/applications/" <> a <> ".desktop") c 
 
 validateOptions :: [String] -> IO String
-validateOptions = undefined
+validateOptions options = 
+  let option = getLine
+  if elem option options
+  then option
+  else putStrLn "Not a valid option, try again." >> validateOptions options
+
+fileCheck :: Path -> IO ()
+fileCheck = undefined 
 
 main :: IO ()
 main = do
   putStrLn "Global or User-Specific Desktop Entry ?" 
   putStrLn "(G/U)"
-  scope <- getLine
+  scope <- validateOptions [
+    "G", "U", "g", "u", 
+    "Global", "User", 
+    "global", "user"
+  ]
   
   putStrLn "What is the name of the app ?"
   appName <- getLine
@@ -39,4 +50,4 @@ main = do
   putStrLn "(default: none)"
   iconPath <- getLine
 
-  putStrLn "Desktop Entry created !"
+  writeDE scope appName execPath iconPath 
