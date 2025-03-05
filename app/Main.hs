@@ -1,5 +1,19 @@
 module Main where
 
+writeDE :: IO () 
+writeDE s a e i =
+  let fileContent =    
+    "[Desktop Entry]" <>
+    "Type=Application" <>
+    "Name=" <> a <>
+    "Exec=" <> e <>
+    "Icon=" i   
+  in write s fileContent
+  where
+    write :: IO ()
+    write = undefined  
+
+
 main :: IO ()
 main = do
   putStrLn "Global or User-Specific Desktop Entry ?" 
