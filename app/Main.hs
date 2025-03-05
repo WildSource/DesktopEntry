@@ -1,5 +1,9 @@
 module Main where
 
+type Scope = String
+type AppName = String
+type Content = String
+
 writeDE :: IO () 
 writeDE s a e i =
   let fileContent =    
@@ -8,11 +12,16 @@ writeDE s a e i =
     "Name=" <> a <>
     "Exec=" <> e <>
     "Icon=" i   
-  in write s fileContent
+  in write s (filter (" " ==) a) fileContent
   where
-    write :: IO ()
-    write = undefined  
+    write :: Scope -> AppName -> Content -> IO ()
+    write "G" a c = 
+      writeFile ("/usr/share/applications/" <> a <> ".desktop") c
+    write "U" a c = 
+      writeFile ("~/.local/share/applications/" <> a <> ".desktop") c 
 
+validateOptions :: [String] -> IO String
+validateOptions = undefined
 
 main :: IO ()
 main = do
