@@ -1,27 +1,43 @@
 module Main where
 
+import System.Directory (doesFileExist)
+
 type Scope = String
 type AppName = String
 type Content = String
 type ExecPath = String
 type IconPath = String 
+type DeskEntryPath = String
 
-writeDE :: Scope -> AppName -> ExecPath -> IconPath -> IO () 
+writeDE :: Scope -> AppName -> ExecPath -> IconPath -> String 
 writeDE s a e i =
-  let fileContent = "[Desktop Entry]\n" <> "Type=Application\n" <> "Name=" <> a <> "\nExec=" <> e <> "\nIcon=" <> i   
-  in write s (filter (' ' ==) a) fileContent
+  let name = filter (' ' ==) a
+      content' = content name e i 
+  in  write s name content'
   where
-    write :: Scope -> AppName -> Content -> IO ()
+    write :: Scope -> AppName -> Content -> String 
     write "G" a c = 
-      writeFile ("/usr/share/applications/" <> a <> ".desktop") c
+      let path' = path "G" a 
+      in writeFile (path') c >> path'
     write "U" a c = 
-      writeFile ("~/.local/share/applications/" <> a <> ".desktop") c 
+      let path' = path "U" a 
+      in writeFile (path') c >> path'
     write _ a c = 
       error "Not a valid Scope"
-    where
-      write' = undefined
 
-fileCheck :: String -> IO Bool
+    content :: AppName -> ExecPath -> IconPath -> String
+    content name exec icon = 
+      "[Desktop Entry]\n" <> 
+      "Type=Application\n" <> 
+      "Name=" <> name <> 
+      "\nExec=" <> exec <> 
+      "\nIcon=" <> icon   
+
+    path :: Scope -> AppName -> DeskEntryPath 
+    path "G" name = "/usr/share/applications/" <> name <> ".desktop"
+    path "U" name = "~/.local/share/applications/" <> name <> ".desktop"
+
+fileCheck :: String -> IO () 
 fileCheck path =
   doesFileExist path >>= isSuccess 
   where
@@ -45,4 +61,4 @@ main = do
   putStrLn "(default: none)"
   iconPath <- getLine
 
-  writeDE scope appName execPath iconPath 
+  putStrLn "Hello"
