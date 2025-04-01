@@ -11,7 +11,7 @@ type DeskEntryPath = String
 
 writeDE :: Scope -> AppName -> ExecPath -> IconPath -> IO String 
 writeDE s a e i =
-  let name = filter (' ' ==) a
+  let name = filter (' ' /=) a
       content' = content name e i 
   in  write s name content'
   where
@@ -40,11 +40,11 @@ writeDE s a e i =
 
 fileCheck :: String -> IO () 
 fileCheck path =
-  doesFileExist path >>= isSuccess 
+  doesFileExist path >>= isSuccess path 
   where
-    isSuccess :: Bool -> IO ()
-    isSuccess True = putStrLn "Desktop Entry was created !"
-    isSuccess False = putStrLn "Desktop Entry's creation failed !"
+    isSuccess :: String -> Bool -> IO ()
+    isSuccess path' True = putStrLn $ "Desktop Entry " <> path' <> " was created !"
+    isSuccess path' False = putStrLn $ "Desktop Entry's " <> path' <> " creation failed !"
 
 main :: IO ()
 main = do
@@ -54,7 +54,7 @@ main = do
   
   putStrLn "What is the name of the app ?"
   appName <- getLine
-  
+
   putStrLn "Enter the executable's Path:"
   execPath <- getLine
 
@@ -62,4 +62,6 @@ main = do
   putStrLn "(default: none)"
   iconPath <- getLine
 
-  writeDE scope appName execPath iconPath >>= fileCheck
+  dePath <- writeDE scope appName execPath iconPath
+
+  fileCheck dePath
