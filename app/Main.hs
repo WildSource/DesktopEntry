@@ -9,21 +9,21 @@ type ExecPath = String
 type IconPath = String 
 type DeskEntryPath = String
 
-writeDE :: Scope -> AppName -> ExecPath -> IconPath -> String 
+writeDE :: Scope -> AppName -> ExecPath -> IconPath -> IO String 
 writeDE s a e i =
   let name = filter (' ' ==) a
       content' = content name e i 
   in  write s name content'
   where
-    write :: Scope -> AppName -> Content -> String 
-    write "G" a c = 
-      let path' = path "G" a 
-      in writeFile (path') c >> path'
-    write "U" a c = 
-      let path' = path "U" a 
-      in writeFile (path') c >> path'
-    write _ a c = 
-      error "Not a valid Scope"
+    write :: Scope -> AppName -> Content -> IO String 
+    write "G" a' c = 
+      let path' = path "G" a' 
+      in writeFile path' c >> pure path'
+    write "U" a' c = 
+      let path' = path "U" a' 
+      in writeFile path' c >> pure path'
+    write _ _ _ = 
+      error "Not a valid Scope" 
 
     content :: AppName -> ExecPath -> IconPath -> String
     content name exec icon = 
@@ -36,6 +36,7 @@ writeDE s a e i =
     path :: Scope -> AppName -> DeskEntryPath 
     path "G" name = "/usr/share/applications/" <> name <> ".desktop"
     path "U" name = "~/.local/share/applications/" <> name <> ".desktop"
+    path _ name = error "Scope error for AppName: " <> name
 
 fileCheck :: String -> IO () 
 fileCheck path =
@@ -61,4 +62,4 @@ main = do
   putStrLn "(default: none)"
   iconPath <- getLine
 
-  putStrLn "Hello"
+  writeDE scope appName execPath iconPath >>= fileCheck
