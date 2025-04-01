@@ -46,12 +46,12 @@ getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: 
 
 
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
-bindir     = "/home/dydx/.cabal/bin"
-libdir     = "/home/dydx/.cabal/lib/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0-inplace-DesktopEntry"
-dynlibdir  = "/home/dydx/.cabal/lib/x86_64-linux-ghc-9.4.8"
-datadir    = "/home/dydx/.cabal/share/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0"
-libexecdir = "/home/dydx/.cabal/libexec/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0"
-sysconfdir = "/home/dydx/.cabal/etc"
+bindir     = "/home/wildsource/.cabal/bin"
+libdir     = "/home/wildsource/.cabal/lib/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0-inplace-DesktopEntry"
+dynlibdir  = "/home/wildsource/.cabal/lib/x86_64-linux-ghc-9.4.8"
+datadir    = "/home/wildsource/.cabal/share/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0"
+libexecdir = "/home/wildsource/.cabal/libexec/x86_64-linux-ghc-9.4.8/DesktopEntry-0.1.0.0"
+sysconfdir = "/home/wildsource/.cabal/etc"
 
 getBinDir     = catchIO (getEnv "DesktopEntry_bindir")     (\_ -> return bindir)
 getLibDir     = catchIO (getEnv "DesktopEntry_libdir")     (\_ -> return libdir)

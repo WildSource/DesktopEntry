@@ -31,15 +31,15 @@
   (major1) == 1 && (major2) == 3 && (minor) <= 9)
 #endif /* MIN_VERSION_directory */
 
-/* tool gcc-13 */
+/* tool gcc-14 */
 #ifndef TOOL_VERSION_gcc
-#define TOOL_VERSION_gcc "13"
+#define TOOL_VERSION_gcc "14"
 #endif /* TOOL_VERSION_gcc */
 #ifndef MIN_TOOL_VERSION_gcc
 #define MIN_TOOL_VERSION_gcc(major1,major2,minor) (\
-  (major1) <  13 || \
-  (major1) == 13 && (major2) <  0 || \
-  (major1) == 13 && (major2) == 0 && (minor) <= 0)
+  (major1) <  14 || \
+  (major1) == 14 && (major2) <  0 || \
+  (major1) == 14 && (major2) == 0 && (minor) <= 0)
 #endif /* MIN_TOOL_VERSION_gcc */
 /* tool ghc-9.4.8 */
 #ifndef TOOL_VERSION_ghc
@@ -111,15 +111,15 @@
   (major1) == 9 && (major2) <  4 || \
   (major1) == 9 && (major2) == 4 && (minor) <= 8)
 #endif /* MIN_TOOL_VERSION_runghc */
-/* tool strip-2.42 */
+/* tool strip-2.44 */
 #ifndef TOOL_VERSION_strip
-#define TOOL_VERSION_strip "2.42"
+#define TOOL_VERSION_strip "2.44"
 #endif /* TOOL_VERSION_strip */
 #ifndef MIN_TOOL_VERSION_strip
 #define MIN_TOOL_VERSION_strip(major1,major2,minor) (\
   (major1) <  2 || \
-  (major1) == 2 && (major2) <  42 || \
-  (major1) == 2 && (major2) == 42 && (minor) <= 0)
+  (major1) == 2 && (major2) <  44 || \
+  (major1) == 2 && (major2) == 44 && (minor) <= 0)
 #endif /* MIN_TOOL_VERSION_strip */
 
 #ifndef CURRENT_COMPONENT_ID
